@@ -130,13 +130,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4f181d6aff3154398ac7b9ddbc057e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  differentColors:
+  - {fileID: 2100000, guid: ff21ff0ea9b18924bb1fdfbb0e58f5cb, type: 2}
+  - {fileID: 2100000, guid: 6221f2fbc7212d94cb9c069ee262d824, type: 2}
+  - {fileID: 2100000, guid: 463052f3f7389124f9e7b34b0b931d0d, type: 2}
+  renderToChange:
+  - {fileID: 2475400265983184562}
+  - {fileID: 2475400265983184564}
+  - {fileID: 2475400265983184570}
+  - {fileID: 2475400265983184560}
   bullet: {fileID: 2232921221837555950, guid: 57e1af1eb492ad343bfa598cfd38fc72, type: 3}
   barrel: {fileID: 6543682151490774973}
+  score: 0
   tankSpeed: 2
   attackDamage: 0
   life: 0
   fireRate: 0.8
   rotationSpeed: 90
+  scoreText: {fileID: 0}
 --- !u!114 &2475400265985349341
 MonoBehaviour:
   m_ObjectHideFlags: 0
