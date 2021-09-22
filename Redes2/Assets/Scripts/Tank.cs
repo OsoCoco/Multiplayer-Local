@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 public class Tank : MonoBehaviour
 {
+
+    //[HideInInspector]
+    //public int ID;
     
-    public MeshRenderer[] renderToChange; 
     Vector2 move;
 
     public GameObject bullet;
@@ -19,52 +22,103 @@ public class Tank : MonoBehaviour
     public float tankSpeed,attackDamage,life;
     public float fireRate = 0.5f;
     public float rotationSpeed = 720;
-    public TextMeshPro scoreText;
+    public float bulletForce;
+    public TMP_Text scoreText;
+    public Slider lifeSlider;
+    public Image sliderImage;
     float nextFire;
 
+    float initLife;
+    bool isAlive;
+
+    private void Start()
+    {
+        initLife = life;
+        lifeSlider.maxValue = initLife;
+    }
 
     // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-        transform.Translate(new Vector3(move.x,0,move.y) * tankSpeed * Time.deltaTime);
-        Quaternion toRotation = Quaternion.LookRotation(new Vector3(move.x, 0, move.y), Vector3.up);
+        Vector3 movement = new Vector3(move.x, 0, move.y);
+
+        transform.Translate(movement * tankSpeed * Time.deltaTime);
+        
+        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+
+        Debug.DrawLine(transform.position, transform.position + movement, Color.red);
+
         //transform.Rotate(rotSpeed * move.x * Time.deltaTime * Vector3.up);
+
+        //CheckDeath();
+    }
+
+    private void LateUpdate()
+    {
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        lifeSlider.value = life;
+
+        if (life > initLife * .50f)
+        {
+            sliderImage.color = Color.green ;
+        }
+        else if( life > initLife * .25f && life <= initLife * .50f )
+        {
+            sliderImage.color = Color.yellow;
+        }
+        else 
+        {
+            sliderImage.color = Color.red;
+        }
+
+        scoreText.text = "Score: " + score.ToString();
     }
 
     public void Fire(InputAction.CallbackContext ctx)
     {
-        /*if(ctx.performed && Time.time > nextFire)
+       if(ctx.performed && Time.time > nextFire)
         {
-            nextFire = Time.time + fireRate;
-            Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
-        }*/
+            nextFire = Time.time + fireRate; 
+            GameObject go = Instantiate(bullet, barrel.transform.position, transform.rotation);
+            go.GetComponent<Bullet>().damage = attackDamage;
+            go.GetComponent<Bullet>().myTank = this;
+            go.GetComponent<Rigidbody>().AddForceAtPosition(transform.forward * bulletForce, barrel.position, ForceMode.Impulse);
+            
+        }
+         //Debug.Log("Fire");
+    }
 
-        //Debug.Log("Fire");
+   public void CheckDeath()
+    {
+        if (life <= 0)
+            isAlive = false;
+        Death(isAlive);
+    }
+
+    void Death(bool alive)
+    {
+        if(!alive)
+        {
+            Debug.Log("I DIE");
+            Respawn();
+        }
     }
 
     void Respawn()
     {
-        Instantiate(this, spawnPoint.position, Quaternion.identity);
+        isAlive = true;
+        life = initLife;
+        transform.position = spawnPoint.position;
     }
-
-    void Death()
-    {
-
-    }
-    
-    public void ChangeColor(Material material)
-    {
-        for (int i = 0; i < renderToChange.Length; i++)
-        {
-            renderToChange[i].materials[0] = material;
-        }
-    }
-
     public void Move(InputAction.CallbackContext ctx)
     {
-        move = ctx.ReadValue<Vector2>();
         
-        
+            move = ctx.ReadValue<Vector2>().normalized;
     }
 }
