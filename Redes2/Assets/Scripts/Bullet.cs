@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
             
             if(myTank !=null)
             {
-                myTank.score += 10;
+                myTank.score += 2;
             }
 
             collision.gameObject.GetComponent<Tank>().life -= damage;

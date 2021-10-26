@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -61.800003, y: -21.7}
+  m_AnchoredPosition: {x: -61.80002, y: -21.699997}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3903985553225946719
@@ -181,9 +181,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2475400265984953378}
-  - component: {fileID: 2475400265985349340}
   - component: {fileID: 2475400265985349341}
   - component: {fileID: 493762878409572690}
+  - component: {fileID: 3834124507036156492}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Tank
@@ -209,31 +209,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2475400265985349340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2475400265985380802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4f181d6aff3154398ac7b9ddbc057e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 2232921221837555950, guid: 57e1af1eb492ad343bfa598cfd38fc72, type: 3}
-  barrel: {fileID: 6543682151490774973}
-  score: 0
-  spawnPoint: {fileID: 0}
-  tankSpeed: 4
-  attackDamage: 2
-  life: 50
-  fireRate: 0.8
-  rotationSpeed: 45
-  bulletForce: 35
-  scoreText: {fileID: 866477796406806085}
-  lifeSlider: {fileID: 3903985553225946719}
-  sliderImage: {fileID: 783216708980835685}
 --- !u!114 &2475400265985349341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +236,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2475400265985349340}
+      - m_Target: {fileID: 3834124507036156492}
         m_TargetAssemblyTypeName: Tank, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
@@ -281,7 +256,7 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2475400265985349340}
+      - m_Target: {fileID: 3834124507036156492}
         m_TargetAssemblyTypeName: Tank, Assembly-CSharp
         m_MethodName: Fire
         m_Mode: 0
@@ -353,6 +328,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6901162, y: 1.3036255, z: 1.3257707}
   m_Center: {x: -0.032574084, y: 0.90699655, z: -0.16288622}
+--- !u!114 &3834124507036156492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475400265985380802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67b108a463459047a59518d5db8003a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 2232921221837555950, guid: 57e1af1eb492ad343bfa598cfd38fc72, type: 3}
+  barrel: {fileID: 6543682151490774973}
+  score: 0
+  spawnPoint: {fileID: 0}
+  tankSpeed: 2
+  attackDamage: 2
+  life: 20
+  fireRate: 0.5
+  rotSpeed: 0.8
+  bulletForce: 100
+  scoreText: {fileID: 866477796406806085}
+  lifeSlider: {fileID: 3903985553225946719}
+  sliderImage: {fileID: 783216708980835685}
 --- !u!1 &2475400265985380804
 GameObject:
   m_ObjectHideFlags: 0

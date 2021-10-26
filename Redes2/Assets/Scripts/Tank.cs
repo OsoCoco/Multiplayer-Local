@@ -7,21 +7,22 @@ using UnityEngine.UI;
 public class Tank : MonoBehaviour
 {
 
-    //[HideInInspector]
-    //public int ID;
+    [HideInInspector]
+    public int ID;
     
     Vector2 move;
 
     public GameObject bullet;
     public Transform barrel;
 
-    public float score;
+    public int score;
 
     public Transform spawnPoint;
     
     public float tankSpeed,attackDamage,life;
     public float fireRate = 0.5f;
-    public float rotationSpeed = 720;
+    public float rotSpeed;
+    float refSpeed;
     public float bulletForce;
     public TMP_Text scoreText;
     public Slider lifeSlider;
@@ -43,12 +44,17 @@ public class Tank : MonoBehaviour
     {
         Vector3 movement = new Vector3(move.x, 0, move.y);
 
-        transform.Translate(movement * tankSpeed * Time.deltaTime);
-        
-        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        //transform.Translate(movement * tankSpeed * Time.deltaTime);
 
-        Debug.DrawLine(transform.position, transform.position + movement, Color.red);
+
+        if (movement.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref refSpeed, rotSpeed);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            transform.Translate(movement * tankSpeed * Time.deltaTime);
+        }
 
         //transform.Rotate(rotSpeed * move.x * Time.deltaTime * Vector3.up);
 
@@ -118,7 +124,6 @@ public class Tank : MonoBehaviour
     }
     public void Move(InputAction.CallbackContext ctx)
     {
-        
-            move = ctx.ReadValue<Vector2>().normalized;
+         move = ctx.ReadValue<Vector2>().normalized;
     }
 }
